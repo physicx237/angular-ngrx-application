@@ -1,0 +1,45 @@
+{
+  "categories": [
+    {
+      "id": 1,
+      "type": "Обязательные для всех",
+      "attribute": "Документы, обязательные для всех сотрудников без исключения",
+      "mark": true
+    },
+    {
+      "id": 2,
+      "type": "Обязательные для трудоустройства",
+      "attribute": "Документы, без которвых невозможно трудоустройство на какую бы то ни было должность в компании вне зависимости от граж",
+      "mark": false
+    },
+    {
+      "id": 3,
+      "type": "Обязательные для всех",
+      "attribute": null,
+      "mark": false
+    }
+  ],
+  "documents": [
+    {
+      "id": 1,
+      "documentType": "Паспорт",
+      "firstAttribute": "Аттрибут 1",
+      "secondAttribute": "Аттрибут 2",
+      "mark": false
+    },
+    {
+      "id": 1,
+      "documentType": "Свидетельство о рождении",
+      "firstAttribute": "Аттрибут 1",
+      "secondAttribute": "Аттрибут 2",
+      "mark": false
+    },
+    {
+      "id": 1,
+      "documentType": "ИНН",
+      "firstAttribute": "Аттрибут 1",
+      "secondAttribute": "Аттрибут 2",
+      "mark": false
+    }
+  ]
+}
