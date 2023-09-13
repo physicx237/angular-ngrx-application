@@ -1,12 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import * as GetDataActions from './get-data.actions';
-import { DocumentModel } from '../models/document.model';
-import { CategoryModel } from '../models/category.model';
-
-interface State {
-    documents: DocumentModel[],
-    categories: CategoryModel[]
-}
+import { State } from './types/state.interface';
 
 export const initialState: State = {
     documents: [],

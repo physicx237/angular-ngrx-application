@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import * as GetDataActions from './domain/store/get-data.actions'
 import { DocumentModel } from './domain/models/document.model';
 import { CategoryModel } from './domain/models/category.model';
+import { DocumentState } from './types/document-state.type';
+import { CategoryState } from './types/categoty-state.type';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +17,7 @@ export class AppComponent implements OnInit {
   documents$: Observable<DocumentModel[]>;
   categories$: Observable<CategoryModel[]>;
 
-  constructor(private firstStore: Store<{ data: { documents: DocumentModel[] } }>, private secondStore: Store<{ data: { categories: CategoryModel[] } }>) {
+  constructor(private firstStore: Store<DocumentState>, private secondStore: Store<CategoryState>) {
     this.documents$ = this.firstStore.select(state => state.data.documents);
     this.categories$ = this.secondStore.select(state => state.data.categories);
   }
