@@ -17,13 +17,13 @@ export class AppComponent implements OnInit {
   documents$: Observable<DocumentModel[]>;
   categories$: Observable<CategoryModel[]>;
 
-  constructor(private firstStore: Store<DocumentState>, private secondStore: Store<CategoryState>) {
-    this.documents$ = this.firstStore.select(state => state.data.documents);
-    this.categories$ = this.secondStore.select(state => state.data.categories);
+  constructor(private documentStore: Store<DocumentState>, private categoryStore: Store<CategoryState>) {
+    this.documents$ = this.documentStore.select(state => state.data.documents);
+    this.categories$ = this.categoryStore.select(state => state.data.categories);
   }
 
   ngOnInit() {
-    this.firstStore.dispatch(GetDataActions.getDocumentsFromEffects());
-    this.secondStore.dispatch(GetDataActions.getCategoriesFromEffects());
+    this.documentStore.dispatch(GetDataActions.getDocumentsFromEffects());
+    this.categoryStore.dispatch(GetDataActions.getCategoriesFromEffects());
   }
 }
