@@ -9,6 +9,6 @@ export const initialState: State = {
 
 export const getDataReducer = createReducer(
     initialState,
-    on(GetDataActions.getDocuments, (state, { payload }) => ({...state, documents: payload})),
+    on(GetDataActions.getDocuments, (state, { payload }) => ({...state, documents: payload })),
     on(GetDataActions.getCategories, (state, { payload }) => ({ ...state, categories: payload })),
 );
