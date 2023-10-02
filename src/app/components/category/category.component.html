@@ -1,4 +1,4 @@
-<div cdkDrag class="wrapper">
+<div class="wrapper">
   <div class="show-button">
     <button
       class="circle"
@@ -7,14 +7,14 @@
     ></button>
   </div>
   <div class="subwrapper-1">
-    <div class="text-1">{{data.type}}</div>
+    <div class="text-1">{{ data.type }}</div>
     <div *ngIf="data.mark" class="small-circles">
       <div class="small-circle-1"></div>
       <div class="small-circle-2"></div>
       <div class="small-circle-3"></div>
     </div>
     <div class="text-2">
-      {{data.attribute}}
+      {{ data.attribute }}
     </div>
   </div>
   <div class="buttons">
@@ -22,4 +22,7 @@
     <button class="delete"></button>
     <button class="vector-2"></button>
   </div>
+</div>
+<div [@categoryOpenClose]="isOpen ? 'open' : 'close'">
+  <ng-container document></ng-container>
 </div>

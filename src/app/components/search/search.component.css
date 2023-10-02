@@ -1,0 +1,28 @@
+.wrapper {
+    display: flex;
+    gap: 12.3px;
+    width: 564px;
+    height: 30px;
+    border-bottom: 1px solid #0066FF;
+}
+
+.magnifying-glass {
+    width: 16.5px;
+    height: 16.5px;
+    background-image: url('../../images/vector-1.svg');
+    background-repeat: no-repeat;
+}
+
+.text-input {
+    display: block;
+    width: 95%;
+    height: 18px;
+    font-family: 'Fira Sans Regular';
+    font-size: 15px;
+}
+
+.cross {
+    width: 11.5px;
+    height: 11.5px;
+    background-image: url('../../images/vector-2.svg');
+}

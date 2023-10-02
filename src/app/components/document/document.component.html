@@ -1,1 +1,17 @@
-<p>document works!</p>
+<div class="wrapper">
+  <div class="subwrapper-1">
+    <div class="text-1">{{data.documentType}}</div>
+    <div class="small-circle" *ngIf="data.mark"></div>
+    <div class="text-2">
+      {{data.firstAttribute}}
+    </div>
+    <div class="text-3">
+      {{data.secondAttribute}}
+    </div>
+  </div>
+  <div class="buttons">
+    <button class="vector-1"></button>
+    <button class="delete"></button>
+    <button class="vector-2"></button>
+  </div>
+</div>

@@ -14,13 +14,13 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { GetDataEffects } from './domain/store/get-data.effects';
 import { CategoryDirective } from './directives/category.directive';
+import { DocumentDirective } from './directives/document.directive';
+import { BookmarkButtonComponent } from './components/bookmark-button/bookmark-button.component';
+import { NewTypeButtonComponent } from './components/new-type-button/new-type-button.component';
+import { NewDocumentButtonComponent } from './components/new-document-button/new-document-button.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    DocumentComponent,
-    SearchComponent,
-  ],
+  declarations: [AppComponent, DocumentComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -31,9 +31,14 @@ import { CategoryDirective } from './directives/category.directive';
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
     WrapperComponent,
     CategoryComponent,
-    CategoryDirective
+    SearchComponent,
+    BookmarkButtonComponent,
+    NewTypeButtonComponent,
+    NewDocumentButtonComponent,
+    CategoryDirective,
+    DocumentDirective,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

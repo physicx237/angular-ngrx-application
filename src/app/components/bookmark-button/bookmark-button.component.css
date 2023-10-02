@@ -1,0 +1,10 @@
+.bookmark {
+    display: block;
+    width: 30px;
+    height: 30px;
+    border: 1px solid #D3D8DF;
+    border-radius: 50%;
+    background-image: url('../../images/vector-3.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+}

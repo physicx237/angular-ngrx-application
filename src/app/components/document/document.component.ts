@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-document',
   templateUrl: './document.component.html',
-  styleUrls: ['./document.component.css']
+  styleUrls: ['./document.component.css'],
 })
 export class DocumentComponent {
-
+  @Input() data: any;
 }

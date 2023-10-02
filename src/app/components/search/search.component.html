@@ -1,1 +1,5 @@
-<p>search works!</p>
+<div class="wrapper">
+    <div class="magnifying-glass"></div>
+    <input type="text" class="text-input" [(ngModel)]="text" (ngModelChange)="showCross()">
+    <button class="cross" (click)="resetInput()" *ngIf="cross"></button>
+</div>

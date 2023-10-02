@@ -1,3 +1,19 @@
-<div cdkDropList (cdkDropListDropped)="drop($event)">
-    <ng-container category></ng-container>
+<div class="wrapper">
+  <div class="title">
+    <div class="title-text">Документы</div>
+    <div class="buttons">
+      <app-bookmark-button></app-bookmark-button>
+      <app-new-type-button></app-new-type-button>
+      <app-new-document-button></app-new-document-button>
+    </div>
+  </div>
+  <div class="search">
+    <app-search></app-search>
+  </div>
+  <div class="cat">
+    <div cdkDropList (cdkDropListDropped)="drop($event)">
+      <ng-container category></ng-container>
+    </div>
+  </div>
+  <div class="no-cat"></div>
 </div>

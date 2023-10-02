@@ -9,7 +9,7 @@
     {
       "id": 2,
       "type": "Обязательные для трудоустройства",
-      "attribute": "Документы, без которвых невозможно трудоустройство на какую бы то ни было должность в компании вне зависимости от граж",
+      "attribute": "Документы, без которых невозможно трудоустройство на какую бы то ни было должность в компании вне зависимости от граж",
       "mark": false
     },
     {
@@ -22,23 +22,50 @@
   "documents": [
     {
       "id": 1,
+      "categoryId": 1,
       "documentType": "Паспорт",
-      "firstAttribute": "Аттрибут 1",
-      "secondAttribute": "Аттрибут 2",
-      "mark": false
+      "firstAttribute": "Обязательный",
+      "secondAttribute": "Для всех",
+      "mark": true
     },
     {
-      "id": 1,
-      "documentType": "Свидетельство о рождении",
-      "firstAttribute": "Аттрибут 1",
-      "secondAttribute": "Аттрибут 2",
-      "mark": false
-    },
-    {
-      "id": 1,
+      "id": 2,
+      "categoryId": 1,
       "documentType": "ИНН",
-      "firstAttribute": "Аттрибут 1",
-      "secondAttribute": "Аттрибут 2",
+      "firstAttribute": "Обязательный",
+      "secondAttribute": "Для всех",
+      "mark": false
+    },
+    {
+      "id": 3,
+      "categoryId": 2,
+      "documentType": "Свидетельство о рождении",
+      "firstAttribute": "Необязательный",
+      "secondAttribute": "Для всех",
+      "mark": true
+    },
+    {
+      "id": 4,
+      "categoryId": 2,
+      "documentType": "Вид на жительство",
+      "firstAttribute": "Необязательный",
+      "secondAttribute": "Не для всех",
+      "mark": false
+    },
+    {
+      "id": 5,
+      "categoryId": 3,
+      "documentType": "Полис обязательного медицинского страхования",
+      "firstAttribute": "Обязательный",
+      "secondAttribute": "Для всех",
+      "mark": true
+    },
+    {
+      "id": 6,
+      "categoryId": 3,
+      "documentType": "Разрешение на временное проживание",
+      "firstAttribute": "Необязательный",
+      "secondAttribute": "Не для всех",
       "mark": false
     }
   ]

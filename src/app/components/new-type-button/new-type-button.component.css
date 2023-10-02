@@ -1,0 +1,13 @@
+.new-type {
+    width: 115px;
+    height: 30px;
+    border: 1px solid #D3D8DF;
+    border-radius: 50px;
+    font-family: 'Fira Sans Medium';
+    font-size: 12px;
+    background-image: url('../../images/vector-4.svg');
+    background-position: 10px center;
+    background-repeat: no-repeat;
+    text-align: start;
+    padding-left: 34px;
+}

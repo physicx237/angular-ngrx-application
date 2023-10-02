@@ -1,13 +1,41 @@
-.example-list {
-  width: 100%;
-  max-width: 100%;
-  min-height: 60px;
-  display: block;
-  background: white;
-  border-radius: 4px;
-  overflow: hidden;
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  margin-top: 38px;
+  margin-left: 30px;
+  margin-right: 30px;
 }
 
-.example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
-  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+.title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title-text {
+    font-size: 22px;
+    font-family: 'Fira Sans Medium';
+}
+
+.buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.search {
+  margin-top: 23px;
+}
+
+.cat {
+  margin-top: 19px;
+}
+
+.docs {
+  margin-left: 16px;
+}
+
+.no-cat {
+  display: flex;
+  flex-direction: column;
+  margin-top: 14px;
 }
