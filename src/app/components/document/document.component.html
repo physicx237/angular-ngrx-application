@@ -1,4 +1,4 @@
-<div class="wrapper">
+<div class="wrapper" cdkDrag>
   <div class="subwrapper-1">
     <div class="text-1">{{data.documentType}}</div>
     <div class="small-circle" *ngIf="data.mark"></div>
@@ -12,6 +12,6 @@
   <div class="buttons">
     <button class="vector-1"></button>
     <button class="delete"></button>
-    <button class="vector-2"></button>
   </div>
+  <button cdkDragHandle class="vector-2"></button>
 </div>

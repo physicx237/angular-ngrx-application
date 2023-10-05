@@ -9,18 +9,25 @@ import { DocumentState } from '../../types/document-state.type';
 import { CategoryState } from '../../types/categoty-state.type';
 import { CategoryComponent } from '../../components/category/category.component';
 import { CategoryDirective } from '../../directives/category.directive';
-import { DocumentComponent } from '../../components/document/document.component';
-import { SearchComponent } from "../search/search.component";
 import { BookmarkButtonComponent } from "../bookmark-button/bookmark-button.component";
 import { NewTypeButtonComponent } from "../new-type-button/new-type-button.component";
 import { NewDocumentButtonComponent } from "../new-document-button/new-document-button.component";
+import { SearchComponent } from "../search/search.component";
 
 @Component({
-    selector: 'app-wrapper',
-    templateUrl: './wrapper.component.html',
-    styleUrls: ['./wrapper.component.css'],
-    standalone: true,
-    imports: [CdkDropList, CdkDrag, CategoryDirective, SearchComponent, BookmarkButtonComponent, NewTypeButtonComponent, NewDocumentButtonComponent]
+  selector: 'app-wrapper',
+  templateUrl: './wrapper.component.html',
+  styleUrls: ['./wrapper.component.css'],
+  standalone: true,
+  imports: [
+    CdkDropList,
+    CdkDrag,
+    BookmarkButtonComponent,
+    NewTypeButtonComponent,
+    NewDocumentButtonComponent,
+    SearchComponent,
+    CategoryDirective,
+  ],
 })
 export class WrapperComponent implements OnInit {
   @ViewChild(CategoryDirective, { static: true }) category!: CategoryDirective;
@@ -32,10 +39,8 @@ export class WrapperComponent implements OnInit {
   documents: DocumentModel[] = [];
 
   categoryComponents: (typeof CategoryComponent)[] = [];
-  documentComponents: (typeof DocumentComponent)[] = [];
 
   categoryDynamicComponents: ComponentRef<CategoryComponent>[] = [];
-  documentDynamicComponents: ComponentRef<DocumentComponent>[] = [];
 
   constructor(
     private documentStore: Store<DocumentState>,
@@ -60,13 +65,13 @@ export class WrapperComponent implements OnInit {
     this.categories$.subscribe((categories) => {
       this.categories = categories;
 
-      for (let i = 0; i < this.categories.length; i++) {
+      categories.forEach(() => {
         this.categoryComponents.push(CategoryComponent);
-      }
+      });
 
       const viewContainerRef = this.category.viewContainerRef;
 
-      for (let i = 0; i < this.categoryComponents.length; i++) {
+      this.categoryComponents.forEach((item, i) => {
         const componentRef =
           viewContainerRef.createComponent<CategoryComponent>(
             this.categoryComponents[i]
@@ -74,16 +79,16 @@ export class WrapperComponent implements OnInit {
         this.categoryDynamicComponents.push(componentRef);
         componentRef.instance.data = this.categories[i];
 
-        for (let j = 0; j < this.documents.length; j++) {
+        this.documents.forEach((item, j) => {
           if (i === this.documents[j].categoryId - 1) {
             componentRef.instance.documents.push(this.documents[j]);
           }
-        }
-      }
+        });
+      });
     });
   }
 
-  drop(event: CdkDragDrop<any[]>) {
+  drop(event: CdkDragDrop<ComponentRef<CategoryComponent>[]>) {
     this.category.viewContainerRef.move(
       this.categoryDynamicComponents[event.previousIndex].hostView,
       event.currentIndex

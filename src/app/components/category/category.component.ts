@@ -6,19 +6,25 @@ import {
   transition,
   animate,
 } from '@angular/animations';
-import { CdkDrag } from '@angular/cdk/drag-drop';
+import {
+  CdkDrag,
+  CdkDragDrop,
+  CdkDragHandle,
+  CdkDropList,
+  moveItemInArray,
+} from '@angular/cdk/drag-drop';
 import { NgIf } from '@angular/common';
 import { DocumentModel } from 'src/app/domain/models/document.model';
 import { DocumentDirective } from 'src/app/directives/document.directive';
 import { DocumentComponent } from '../document/document.component';
+import { CategoryModel } from 'src/app/domain/models/category.model';
 
 @Component({
   selector: 'app-category',
   templateUrl: './category.component.html',
   styleUrls: ['./category.component.css'],
   standalone: true,
-  imports: [CdkDrag, NgIf, DocumentDirective],
-  hostDirectives: [CdkDrag],
+  imports: [CdkDropList, CdkDrag, CdkDragHandle, NgIf, DocumentDirective],
   animations: [
     trigger('openClose', [
       state(
@@ -61,14 +67,13 @@ import { DocumentComponent } from '../document/document.component';
           overflow: 'hidden',
         })
       ),
-      transition('open => close', [animate('0.25s')]),
-      transition('close => open', [animate('0.25s')]),
+      transition('open <=> close', [animate('0.25s')]),
     ]),
   ],
 })
 export class CategoryComponent {
   @ViewChild(DocumentDirective, { static: true }) document!: DocumentDirective;
-  @Input() data: any;
+  @Input() data!: CategoryModel;
   @Input() documents: DocumentModel[] = [];
   isOpen = false;
 
@@ -76,22 +81,42 @@ export class CategoryComponent {
   documentDynamicComponents: ComponentRef<DocumentComponent>[] = [];
 
   ngOnInit() {
-    for (let i = 0; i < this.documents.length; i++) {
+    this.documents.forEach(() => {
       this.documentComponents.push(DocumentComponent);
-    }
+    });
+  }
 
+  createComponents() {
     const viewContainerRef = this.document.viewContainerRef;
 
-    for (let i = 0; i < this.documentComponents.length; i++) {
+    this.documents.forEach((item, i) => {
       const componentRef = viewContainerRef.createComponent<DocumentComponent>(
         this.documentComponents[i]
       );
       this.documentDynamicComponents.push(componentRef);
       componentRef.instance.data = this.documents[i];
-    }
+    });
+  }
+
+  deleteComponents() {
+    this.document.viewContainerRef.clear();
   }
 
   showItems() {
     this.isOpen = !this.isOpen;
+    this.isOpen && this.createComponents();
+    !this.isOpen && this.deleteComponents();
+  }
+
+  drop(event: CdkDragDrop<ComponentRef<DocumentComponent>[]>) {
+    this.document.viewContainerRef.move(
+      this.documentDynamicComponents[event.previousIndex].hostView,
+      event.currentIndex
+    );
+    moveItemInArray(
+      this.documentDynamicComponents,
+      event.previousIndex,
+      event.currentIndex
+    );
   }
 }

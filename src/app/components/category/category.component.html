@@ -1,4 +1,4 @@
-<div class="wrapper">
+<div class="wrapper" cdkDrag>
   <div class="show-button">
     <button
       class="circle"
@@ -20,9 +20,9 @@
   <div class="buttons">
     <button class="vector-1"></button>
     <button class="delete"></button>
-    <button class="vector-2"></button>
   </div>
+  <button cdkDragHandle class="vector-2"></button>
 </div>
-<div [@categoryOpenClose]="isOpen ? 'open' : 'close'">
+<div cdkDropList (cdkDropListDropped)="drop($event)">
   <ng-container document></ng-container>
 </div>

@@ -47,7 +47,7 @@
     display: flex;
     align-items: center;
     gap: 22px;
-    margin-right: 16px;
+    margin-left: 31px;
 }
 
 .vector-1 {
@@ -59,11 +59,14 @@
 }
 
 .vector-2 {
-    width: 8px;
+    display: block;
+    width: 10px;
     height: 16px;
     background-image: url('../../images/vector-8.svg');
     background-repeat: no-repeat;
     background-position: center center;
+    margin-right: 16px;
+    margin-left: 22px;
 }
 
 .delete {

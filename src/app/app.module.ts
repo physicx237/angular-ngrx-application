@@ -20,7 +20,7 @@ import { NewTypeButtonComponent } from './components/new-type-button/new-type-bu
 import { NewDocumentButtonComponent } from './components/new-document-button/new-document-button.component';
 
 @NgModule({
-  declarations: [AppComponent, DocumentComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -35,6 +35,7 @@ import { NewDocumentButtonComponent } from './components/new-document-button/new
     BookmarkButtonComponent,
     NewTypeButtonComponent,
     NewDocumentButtonComponent,
+    DocumentComponent,
     CategoryDirective,
     DocumentDirective,
   ],
