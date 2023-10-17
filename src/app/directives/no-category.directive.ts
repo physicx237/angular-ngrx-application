@@ -1,9 +1,9 @@
 import { Directive, ViewContainerRef } from '@angular/core';
 
 @Directive({
-  selector: '[category]',
+  selector: '[noCategory]',
   standalone: true,
 })
-export class CategoryDirective {
+export class NoCategoryDirective {
   constructor(public viewContainerRef: ViewContainerRef) {}
 }

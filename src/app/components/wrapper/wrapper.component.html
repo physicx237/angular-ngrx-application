@@ -11,9 +11,11 @@
     <app-search></app-search>
   </div>
   <div class="cat">
-    <div cdkDropList (cdkDropListDropped)="drop($event)">
+    <div cdkDropList (cdkDropListDropped)="dropCategory($event)">
       <ng-container category></ng-container>
     </div>
   </div>
-  <div class="no-cat"></div>
+  <div cdkDropList (cdkDropListDropped)="dropNoCategoryDocument($event)" class="no-cat">
+    <ng-container noCategory></ng-container>
+  </div>
 </div>

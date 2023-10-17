@@ -1,18 +1,25 @@
 import { Component, ComponentRef, OnInit, ViewChild } from '@angular/core';
-import { CdkDragDrop, CdkDropList, CdkDrag, moveItemInArray } from '@angular/cdk/drag-drop';
+import {
+  CdkDragDrop,
+  CdkDropList,
+  CdkDrag,
+  moveItemInArray,
+} from '@angular/cdk/drag-drop';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import * as GetDataActions from '../../domain/store/get-data.actions'
+import * as GetDataActions from '../../domain/store/get-data.actions';
 import { DocumentModel } from '../../domain/models/document.model';
 import { CategoryModel } from '../../domain/models/category.model';
 import { DocumentState } from '../../types/document-state.type';
 import { CategoryState } from '../../types/categoty-state.type';
 import { CategoryComponent } from '../../components/category/category.component';
 import { CategoryDirective } from '../../directives/category.directive';
-import { BookmarkButtonComponent } from "../bookmark-button/bookmark-button.component";
-import { NewTypeButtonComponent } from "../new-type-button/new-type-button.component";
-import { NewDocumentButtonComponent } from "../new-document-button/new-document-button.component";
-import { SearchComponent } from "../search/search.component";
+import { BookmarkButtonComponent } from '../bookmark-button/bookmark-button.component';
+import { NewTypeButtonComponent } from '../new-type-button/new-type-button.component';
+import { NewDocumentButtonComponent } from '../new-document-button/new-document-button.component';
+import { SearchComponent } from '../search/search.component';
+import { NoCategoryDirective } from 'src/app/directives/no-category.directive';
+import { DocumentComponent } from '../document/document.component';
 
 @Component({
   selector: 'app-wrapper',
@@ -27,10 +34,13 @@ import { SearchComponent } from "../search/search.component";
     NewDocumentButtonComponent,
     SearchComponent,
     CategoryDirective,
+    NoCategoryDirective,
   ],
 })
 export class WrapperComponent implements OnInit {
   @ViewChild(CategoryDirective, { static: true }) category!: CategoryDirective;
+  @ViewChild(NoCategoryDirective, { static: true })
+  noCategory!: NoCategoryDirective;
 
   documents$: Observable<DocumentModel[]>;
   categories$: Observable<CategoryModel[]>;
@@ -41,6 +51,7 @@ export class WrapperComponent implements OnInit {
   categoryComponents: (typeof CategoryComponent)[] = [];
 
   categoryDynamicComponents: ComponentRef<CategoryComponent>[] = [];
+  noCategoryDynamicComponents: ComponentRef<DocumentComponent>[] = [];
 
   constructor(
     private documentStore: Store<DocumentState>,
@@ -60,6 +71,15 @@ export class WrapperComponent implements OnInit {
 
     this.documents$.subscribe((documents) => {
       this.documents = documents;
+
+      const viewContainerRef = this.noCategory.viewContainerRef;
+
+      documents.forEach((item, index) => {
+        const componentRef =
+          viewContainerRef.createComponent(DocumentComponent);
+        this.noCategoryDynamicComponents.push(componentRef);
+        componentRef.instance.data = this.documents[index];
+      });
     });
 
     this.categories$.subscribe((categories) => {
@@ -88,13 +108,25 @@ export class WrapperComponent implements OnInit {
     });
   }
 
-  drop(event: CdkDragDrop<ComponentRef<CategoryComponent>[]>) {
+  dropCategory(event: CdkDragDrop<ComponentRef<CategoryComponent>[]>) {
     this.category.viewContainerRef.move(
       this.categoryDynamicComponents[event.previousIndex].hostView,
       event.currentIndex
     );
     moveItemInArray(
       this.categoryDynamicComponents,
+      event.previousIndex,
+      event.currentIndex
+    );
+  }
+
+  dropNoCategoryDocument(event: CdkDragDrop<ComponentRef<DocumentComponent>[]>) {
+    this.noCategory.viewContainerRef.move(
+      this.noCategoryDynamicComponents[event.previousIndex].hostView,
+      event.currentIndex
+    );
+    moveItemInArray(
+      this.noCategoryDynamicComponents,
       event.previousIndex,
       event.currentIndex
     );

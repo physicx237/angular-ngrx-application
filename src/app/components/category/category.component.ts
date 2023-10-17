@@ -24,52 +24,7 @@ import { CategoryModel } from 'src/app/domain/models/category.model';
   templateUrl: './category.component.html',
   styleUrls: ['./category.component.css'],
   standalone: true,
-  imports: [CdkDropList, CdkDrag, CdkDragHandle, NgIf, DocumentDirective],
-  animations: [
-    trigger('openClose', [
-      state(
-        'open',
-        style({
-          width: '22px',
-          height: '22px',
-          border: '1px solid #D3D8DF',
-          borderRadius: '50px',
-          transform: 'rotate(180deg)',
-          backgroundRepeat: 'no-repeat',
-          backgroundPosition: 'center 8px',
-        })
-      ),
-      state(
-        'close',
-        style({
-          width: '22px',
-          height: '22px',
-          border: '1px solid #D3D8DF',
-          borderRadius: '50px',
-          backgroundRepeat: 'no-repeat',
-          backgroundPosition: 'center 8px',
-        })
-      ),
-      transition('open => close', [animate('0.25s')]),
-      transition('close => open', [animate('0.25s')]),
-    ]),
-    trigger('categoryOpenClose', [
-      state(
-        'open',
-        style({
-          overflow: 'hidden',
-        })
-      ),
-      state(
-        'close',
-        style({
-          height: '0px',
-          overflow: 'hidden',
-        })
-      ),
-      transition('open <=> close', [animate('0.25s')]),
-    ]),
-  ],
+  imports: [CdkDropList, CdkDrag, CdkDragHandle, NgIf, DocumentDirective]
 })
 export class CategoryComponent {
   @ViewChild(DocumentDirective, { static: true }) document!: DocumentDirective;

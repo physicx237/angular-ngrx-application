@@ -18,6 +18,7 @@ import { DocumentDirective } from './directives/document.directive';
 import { BookmarkButtonComponent } from './components/bookmark-button/bookmark-button.component';
 import { NewTypeButtonComponent } from './components/new-type-button/new-type-button.component';
 import { NewDocumentButtonComponent } from './components/new-document-button/new-document-button.component';
+import { NoCategoryDirective } from './directives/no-category.directive';
 
 @NgModule({
   declarations: [AppComponent],
@@ -38,6 +39,7 @@ import { NewDocumentButtonComponent } from './components/new-document-button/new
     DocumentComponent,
     CategoryDirective,
     DocumentDirective,
+    NoCategoryDirective,
   ],
   providers: [],
   bootstrap: [AppComponent],
