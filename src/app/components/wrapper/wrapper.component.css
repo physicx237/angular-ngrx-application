@@ -39,3 +39,7 @@
   flex-direction: column;
   margin-top: 14px;
 }
+
+.doc {
+  min-height: 35px;
+}

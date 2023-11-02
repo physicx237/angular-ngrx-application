@@ -13,12 +13,9 @@ import { getDataReducer } from './domain/store/get-data.reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { GetDataEffects } from './domain/store/get-data.effects';
-import { CategoryDirective } from './directives/category.directive';
-import { DocumentDirective } from './directives/document.directive';
 import { BookmarkButtonComponent } from './components/bookmark-button/bookmark-button.component';
 import { NewTypeButtonComponent } from './components/new-type-button/new-type-button.component';
 import { NewDocumentButtonComponent } from './components/new-document-button/new-document-button.component';
-import { NoCategoryDirective } from './directives/no-category.directive';
 
 @NgModule({
   declarations: [AppComponent],
@@ -37,9 +34,6 @@ import { NoCategoryDirective } from './directives/no-category.directive';
     NewTypeButtonComponent,
     NewDocumentButtonComponent,
     DocumentComponent,
-    CategoryDirective,
-    DocumentDirective,
-    NoCategoryDirective,
   ],
   providers: [],
   bootstrap: [AppComponent],

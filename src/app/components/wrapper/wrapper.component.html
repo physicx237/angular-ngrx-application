@@ -10,12 +10,67 @@
   <div class="search">
     <app-search></app-search>
   </div>
-  <div class="cat">
-    <div cdkDropList (cdkDropListDropped)="dropCategory($event)">
-      <ng-container category></ng-container>
+
+  <div
+    cdkDropList
+    [cdkDropListData]="categories"
+    (cdkDropListDropped)="dropGroup($event)"
+    class="cat"
+  >
+    <div
+      *ngFor="let category of categories; let i = index"
+      cdkDrag
+      [cdkDragDisabled]="dragDropState"
+    >
+      <app-category
+        [data]="category"
+        (dragDropEvent)="dragDrop($event)"
+      ></app-category>
+      <ng-container
+        *ngTemplateOutlet="template; context: { number: i }"
+      ></ng-container>
     </div>
   </div>
-  <div cdkDropList (cdkDropListDropped)="dropNoCategoryDocument($event)" class="no-cat">
-    <ng-container noCategory></ng-container>
+
+  <div cdkDropListGroup>
+    <ng-template #template let-index="number">
+      <div
+        cdkDropList
+        [cdkDropListData]="documents[index]"
+        (cdkDropListDropped)="drop($event)"
+        class="doc"
+      >
+        <div
+          *ngFor="let document of documents[index]"
+          cdkDrag
+          [cdkDragDisabled]="dragDropState"
+        >
+          <app-document
+            [data]="document"
+            (dragDropEvent)="dragDrop($event)"
+          ></app-document>
+        </div>
+      </div>
+    </ng-template>
+
+    <div
+      cdkDropList
+      [cdkDropListData]="noCategoryDocuments"
+      (cdkDropListDropped)="drop($event)"
+      class="no-cat"
+    >
+      <br />
+      <div
+        *ngFor="let document of noCategoryDocuments"
+        cdkDrag
+        [cdkDragDisabled]="dragDropState"
+      >
+        <app-document
+          [style]="{ width: '1160px', 'margin-left': '0' }"
+          [data]="document"
+          (dragDropEvent)="dragDrop($event)"
+        ></app-document>
+      </div>
+    </div>
   </div>
 </div>

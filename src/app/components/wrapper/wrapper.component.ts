@@ -1,9 +1,11 @@
-import { Component, ComponentRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   CdkDragDrop,
   CdkDropList,
   CdkDrag,
   moveItemInArray,
+  CdkDropListGroup,
+  transferArrayItem,
 } from '@angular/cdk/drag-drop';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -12,14 +14,16 @@ import { DocumentModel } from '../../domain/models/document.model';
 import { CategoryModel } from '../../domain/models/category.model';
 import { DocumentState } from '../../types/document-state.type';
 import { CategoryState } from '../../types/categoty-state.type';
-import { CategoryComponent } from '../../components/category/category.component';
 import { CategoryDirective } from '../../directives/category.directive';
 import { BookmarkButtonComponent } from '../bookmark-button/bookmark-button.component';
 import { NewTypeButtonComponent } from '../new-type-button/new-type-button.component';
 import { NewDocumentButtonComponent } from '../new-document-button/new-document-button.component';
 import { SearchComponent } from '../search/search.component';
 import { NoCategoryDirective } from 'src/app/directives/no-category.directive';
+import { CategoryComponent } from '../category/category.component';
 import { DocumentComponent } from '../document/document.component';
+import { NgFor, NgStyle, NgTemplateOutlet } from '@angular/common';
+import { biggestNumber } from 'src/app/utils/biggest-number-function';
 
 @Component({
   selector: 'app-wrapper',
@@ -27,6 +31,7 @@ import { DocumentComponent } from '../document/document.component';
   styleUrls: ['./wrapper.component.css'],
   standalone: true,
   imports: [
+    CdkDropListGroup,
     CdkDropList,
     CdkDrag,
     BookmarkButtonComponent,
@@ -35,33 +40,31 @@ import { DocumentComponent } from '../document/document.component';
     SearchComponent,
     CategoryDirective,
     NoCategoryDirective,
+    CategoryComponent,
+    DocumentComponent,
+    NgFor,
+    NgTemplateOutlet,
+    NgStyle,
   ],
 })
 export class WrapperComponent implements OnInit {
-  @ViewChild(CategoryDirective, { static: true }) category!: CategoryDirective;
-  @ViewChild(NoCategoryDirective, { static: true })
-  noCategory!: NoCategoryDirective;
-
   documents$: Observable<DocumentModel[]>;
   categories$: Observable<CategoryModel[]>;
 
   categories: CategoryModel[] = [];
-  documents: DocumentModel[] = [];
-
-  categoryComponents: (typeof CategoryComponent)[] = [];
-
-  categoryDynamicComponents: ComponentRef<CategoryComponent>[] = [];
-  noCategoryDynamicComponents: ComponentRef<DocumentComponent>[] = [];
+  documents: DocumentModel[][] = [];
+  noCategoryDocuments: DocumentModel[] = [];
+  dragDropState = true;
 
   constructor(
     private documentStore: Store<DocumentState>,
-    private categoryStore: Store<CategoryState>
+    private categoryStore: Store<CategoryState>,
   ) {
     this.documents$ = this.documentStore.select(
-      (state) => state.data.documents
+      (state) => state.data.documents,
     );
     this.categories$ = this.categoryStore.select(
-      (state) => state.data.categories
+      (state) => state.data.categories,
     );
   }
 
@@ -69,66 +72,53 @@ export class WrapperComponent implements OnInit {
     this.documentStore.dispatch(GetDataActions.getDocumentsFromEffects());
     this.categoryStore.dispatch(GetDataActions.getCategoriesFromEffects());
 
-    this.documents$.subscribe((documents) => {
-      this.documents = documents;
-
-      const viewContainerRef = this.noCategory.viewContainerRef;
-
-      documents.forEach((item, index) => {
-        const componentRef =
-          viewContainerRef.createComponent(DocumentComponent);
-        this.noCategoryDynamicComponents.push(componentRef);
-        componentRef.instance.data = this.documents[index];
+    this.categories$.subscribe((categories) => {
+      categories.forEach((item) => {
+        this.categories.push(item);
       });
     });
 
-    this.categories$.subscribe((categories) => {
-      this.categories = categories;
-
-      categories.forEach(() => {
-        this.categoryComponents.push(CategoryComponent);
-      });
-
-      const viewContainerRef = this.category.viewContainerRef;
-
-      this.categoryComponents.forEach((item, i) => {
-        const componentRef =
-          viewContainerRef.createComponent<CategoryComponent>(
-            this.categoryComponents[i]
-          );
-        this.categoryDynamicComponents.push(componentRef);
-        componentRef.instance.data = this.categories[i];
-
-        this.documents.forEach((item, j) => {
-          if (i === this.documents[j].categoryId - 1) {
-            componentRef.instance.documents.push(this.documents[j]);
+    this.documents$.subscribe((documents) => {
+      for (let i = 0; i < biggestNumber(documents); i++) {
+        this.documents.push([]);
+      }
+      for (let i = 0; i < biggestNumber(documents); i++) {
+        documents.forEach((item) => {
+          if (item.categoryId === i + 1) {
+            this.documents[i].push(item);
           }
         });
+      }
+      documents.forEach((item) => {
+        this.noCategoryDocuments.push(item);
       });
     });
   }
 
-  dropCategory(event: CdkDragDrop<ComponentRef<CategoryComponent>[]>) {
-    this.category.viewContainerRef.move(
-      this.categoryDynamicComponents[event.previousIndex].hostView,
-      event.currentIndex
-    );
-    moveItemInArray(
-      this.categoryDynamicComponents,
-      event.previousIndex,
-      event.currentIndex
-    );
+  dragDrop(state: any) {
+    this.dragDropState = state;
   }
 
-  dropNoCategoryDocument(event: CdkDragDrop<ComponentRef<DocumentComponent>[]>) {
-    this.noCategory.viewContainerRef.move(
-      this.noCategoryDynamicComponents[event.previousIndex].hostView,
-      event.currentIndex
-    );
-    moveItemInArray(
-      this.noCategoryDynamicComponents,
-      event.previousIndex,
-      event.currentIndex
-    );
+  dropGroup(event: CdkDragDrop<any>) {
+    moveItemInArray(this.categories, event.previousIndex, event.currentIndex);
+    moveItemInArray(this.documents, event.previousIndex, event.currentIndex);
+  }
+
+  drop(event: CdkDragDrop<any>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex,
+      );
+    } else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex,
+      );
+    }
+    this.dragDropState = true;
   }
 }
