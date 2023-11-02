@@ -48,8 +48,6 @@ export class WrapperComponent implements OnInit {
   categories: CategoryModel[] = [];
   documents: DocumentModel[] = [];
 
-  categoryComponents: (typeof CategoryComponent)[] = [];
-
   categoryDynamicComponents: ComponentRef<CategoryComponent>[] = [];
   noCategoryDynamicComponents: ComponentRef<DocumentComponent>[] = [];
 
@@ -85,16 +83,12 @@ export class WrapperComponent implements OnInit {
     this.categories$.subscribe((categories) => {
       this.categories = categories;
 
-      categories.forEach(() => {
-        this.categoryComponents.push(CategoryComponent);
-      });
-
       const viewContainerRef = this.category.viewContainerRef;
 
-      this.categoryComponents.forEach((item, i) => {
+      this.categories.forEach((item, i) => {
         const componentRef =
           viewContainerRef.createComponent<CategoryComponent>(
-            this.categoryComponents[i]
+            CategoryComponent
           );
         this.categoryDynamicComponents.push(componentRef);
         componentRef.instance.data = this.categories[i];
@@ -120,7 +114,9 @@ export class WrapperComponent implements OnInit {
     );
   }
 
-  dropNoCategoryDocument(event: CdkDragDrop<ComponentRef<DocumentComponent>[]>) {
+  dropNoCategoryDocument(
+    event: CdkDragDrop<ComponentRef<DocumentComponent>[]>
+  ) {
     this.noCategory.viewContainerRef.move(
       this.noCategoryDynamicComponents[event.previousIndex].hostView,
       event.currentIndex
