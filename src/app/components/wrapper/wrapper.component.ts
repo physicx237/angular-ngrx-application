@@ -14,12 +14,10 @@ import { DocumentModel } from '../../domain/models/document.model';
 import { CategoryModel } from '../../domain/models/category.model';
 import { DocumentState } from '../../types/document-state.type';
 import { CategoryState } from '../../types/categoty-state.type';
-import { CategoryDirective } from '../../directives/category.directive';
 import { BookmarkButtonComponent } from '../bookmark-button/bookmark-button.component';
 import { NewTypeButtonComponent } from '../new-type-button/new-type-button.component';
 import { NewDocumentButtonComponent } from '../new-document-button/new-document-button.component';
 import { SearchComponent } from '../search/search.component';
-import { NoCategoryDirective } from 'src/app/directives/no-category.directive';
 import { CategoryComponent } from '../category/category.component';
 import { DocumentComponent } from '../document/document.component';
 import { NgFor, NgStyle, NgTemplateOutlet } from '@angular/common';
@@ -38,8 +36,6 @@ import { biggestNumber } from 'src/app/utils/biggest-number-function';
     NewTypeButtonComponent,
     NewDocumentButtonComponent,
     SearchComponent,
-    CategoryDirective,
-    NoCategoryDirective,
     CategoryComponent,
     DocumentComponent,
     NgFor,
@@ -54,6 +50,7 @@ export class WrapperComponent implements OnInit {
   categories: CategoryModel[] = [];
   documents: DocumentModel[][] = [];
   noCategoryDocuments: DocumentModel[] = [];
+  
   dragDropState = true;
 
   constructor(
@@ -102,6 +99,7 @@ export class WrapperComponent implements OnInit {
   dropGroup(event: CdkDragDrop<any>) {
     moveItemInArray(this.categories, event.previousIndex, event.currentIndex);
     moveItemInArray(this.documents, event.previousIndex, event.currentIndex);
+    this.dragDropState = true;
   }
 
   drop(event: CdkDragDrop<any>) {
