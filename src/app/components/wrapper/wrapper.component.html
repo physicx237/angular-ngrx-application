@@ -25,10 +25,14 @@
       <app-category
         [data]="category"
         (dragDropEvent)="dragDrop($event)"
+        (showDocumentsFirstEvent)="showDocuments($event, i)"
+        (showDocumentsSecondEvent)="showDocuments($event, i)"
       ></app-category>
-      <ng-container
-        *ngTemplateOutlet="template; context: { number: i }"
-      ></ng-container>
+      <div [ngStyle]="styles[i]">
+        <ng-container
+          *ngTemplateOutlet="template; context: { number: i }"
+        ></ng-container>
+      </div>
     </div>
   </div>
 

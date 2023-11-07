@@ -12,10 +12,22 @@ import { CategoryModel } from 'src/app/domain/models/category.model';
 })
 export class CategoryComponent {
   @Input() data!: CategoryModel;
-
   @Output() dragDropEvent = new EventEmitter<boolean>();
+  @Output() showDocumentsFirstEvent = new EventEmitter<string>();
+  @Output() showDocumentsSecondEvent = new EventEmitter<string>();
+  showDocumentsState = false;
 
   drag() {
     this.dragDropEvent.emit(false);
+  }
+
+  showDocuments() {
+    this.showDocumentsFirstEvent.emit(
+      this.showDocumentsState ? 'block' : 'none',
+    );
+    this.showDocumentsSecondEvent.emit(
+      this.showDocumentsState ? 'none' : 'block',
+    );
+    this.showDocumentsState = !this.showDocumentsState;
   }
 }

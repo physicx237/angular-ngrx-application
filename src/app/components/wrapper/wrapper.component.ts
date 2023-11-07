@@ -46,11 +46,20 @@ import { biggestNumber } from 'src/app/utils/biggest-number-function';
 export class WrapperComponent implements OnInit {
   documents$: Observable<DocumentModel[]>;
   categories$: Observable<CategoryModel[]>;
-
   categories: CategoryModel[] = [];
   documents: DocumentModel[][] = [];
   noCategoryDocuments: DocumentModel[] = [];
-  
+  styles = [
+    {
+      display: 'none',
+    },
+    {
+      display: 'none',
+    },
+    {
+      display: 'none',
+    },
+  ];
   dragDropState = true;
 
   constructor(
@@ -95,6 +104,10 @@ export class WrapperComponent implements OnInit {
   dragDrop(state: any) {
     this.dragDropState = state;
   }
+
+  showDocuments(state: any, index: number) {
+    this.styles[index].display = state;
+  };
 
   dropGroup(event: CdkDragDrop<any>) {
     moveItemInArray(this.categories, event.previousIndex, event.currentIndex);
