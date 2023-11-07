@@ -28,7 +28,7 @@
         (showDocumentsFirstEvent)="showDocuments($event, i)"
         (showDocumentsSecondEvent)="showDocuments($event, i)"
       ></app-category>
-      <div [ngStyle]="styles[i]">
+      <div [@openClose]="styles[i] ? 'true' : 'false'">
         <ng-container
           *ngTemplateOutlet="template; context: { number: i }"
         ></ng-container>
@@ -36,18 +36,19 @@
     </div>
   </div>
 
-  <div cdkDropListGroup>
+  <div cdkDropListGroup class="example-container">
     <ng-template #template let-index="number">
       <div
         cdkDropList
         [cdkDropListData]="documents[index]"
         (cdkDropListDropped)="drop($event)"
-        class="doc"
+        class="doc example-list"
       >
         <div
           *ngFor="let document of documents[index]"
           cdkDrag
           [cdkDragDisabled]="dragDropState"
+          class="example-box"
         >
           <app-document
             [data]="document"
@@ -61,13 +62,14 @@
       cdkDropList
       [cdkDropListData]="noCategoryDocuments"
       (cdkDropListDropped)="drop($event)"
-      class="no-cat"
+      class="no-cat example-list"
     >
       <br />
       <div
         *ngFor="let document of noCategoryDocuments"
         cdkDrag
         [cdkDragDisabled]="dragDropState"
+        class="example-box"
       >
         <app-document
           [style]="{ width: '1160px', 'margin-left': '0' }"

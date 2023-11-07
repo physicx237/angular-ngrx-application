@@ -1,5 +1,5 @@
 <div class="wrapper">
-  <div class="show-button">
+  <div class="show-button" [@openClose]="showDocumentsState ? 'true' : 'false'">
     <button class="circle" (click)="showDocuments()"></button>
   </div>
   <div class="subwrapper-1">

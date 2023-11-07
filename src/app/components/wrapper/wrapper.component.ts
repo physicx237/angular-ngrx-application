@@ -22,6 +22,7 @@ import { CategoryComponent } from '../category/category.component';
 import { DocumentComponent } from '../document/document.component';
 import { NgFor, NgStyle, NgTemplateOutlet } from '@angular/common';
 import { biggestNumber } from 'src/app/utils/biggest-number-function';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-wrapper',
@@ -42,6 +43,26 @@ import { biggestNumber } from 'src/app/utils/biggest-number-function';
     NgTemplateOutlet,
     NgStyle,
   ],
+  animations: [
+    trigger('openClose', [
+      state(
+        'true',
+        style({
+          overflow: 'hidden',
+        }),
+      ),
+      state(
+        'false',
+        style({
+          height: '0px',
+          overflow: 'hidden',
+          display: 'none'
+        }),
+      ),
+      transition('true => false', [animate('0.25s')]),
+      transition('false => true', [animate('0.25s')]),
+    ]),
+  ],
 })
 export class WrapperComponent implements OnInit {
   documents$: Observable<DocumentModel[]>;
@@ -49,17 +70,7 @@ export class WrapperComponent implements OnInit {
   categories: CategoryModel[] = [];
   documents: DocumentModel[][] = [];
   noCategoryDocuments: DocumentModel[] = [];
-  styles = [
-    {
-      display: 'none',
-    },
-    {
-      display: 'none',
-    },
-    {
-      display: 'none',
-    },
-  ];
+  styles: boolean[] = [];
   dragDropState = true;
 
   constructor(
@@ -81,6 +92,7 @@ export class WrapperComponent implements OnInit {
     this.categories$.subscribe((categories) => {
       categories.forEach((item) => {
         this.categories.push(item);
+        this.styles.push(false);
       });
     });
 
@@ -106,8 +118,8 @@ export class WrapperComponent implements OnInit {
   }
 
   showDocuments(state: any, index: number) {
-    this.styles[index].display = state;
-  };
+    this.styles[index] = state;
+  }
 
   dropGroup(event: CdkDragDrop<any>) {
     moveItemInArray(this.categories, event.previousIndex, event.currentIndex);
