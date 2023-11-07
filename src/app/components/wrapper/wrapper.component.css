@@ -44,25 +44,16 @@
   min-height: 35px;
 }
 
-.example-container {
+.document-container {
   max-width: 100%;
   display: inline-block;
   vertical-align: top;
 }
 
-.example-list {
+.document-list {
   background: white;
   overflow: hidden;
   display: block;
-}
-
-.example-box {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  box-sizing: border-box;
-  cursor: move;
 }
 
 .cdk-drag-preview {
@@ -77,10 +68,36 @@
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
-.example-box:last-child {
+.document-box:last-child {
   border: none;
 }
 
-.example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
+.document-list.cdk-drop-list-dragging .document-box:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.category-list {
+  background: white;
+  overflow: hidden;
+  display: block;
+}
+
+.cdk-drag-preview {
+  box-sizing: border-box;
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.category-box:last-child {
+  border: none;
+}
+
+.category-list.cdk-drop-list-dragging .category-box:not(.cdk-drag-placeholder) {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }

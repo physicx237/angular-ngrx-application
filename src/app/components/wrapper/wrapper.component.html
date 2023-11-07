@@ -15,12 +15,13 @@
     cdkDropList
     [cdkDropListData]="categories"
     (cdkDropListDropped)="dropGroup($event)"
-    class="cat"
+    class="cat category-list"
   >
     <div
       *ngFor="let category of categories; let i = index"
       cdkDrag
       [cdkDragDisabled]="dragDropState"
+      class="category-box"
     >
       <app-category
         [data]="category"
@@ -36,19 +37,19 @@
     </div>
   </div>
 
-  <div cdkDropListGroup class="example-container">
+  <div cdkDropListGroup class="document-container">
     <ng-template #template let-index="number">
       <div
         cdkDropList
         [cdkDropListData]="documents[index]"
         (cdkDropListDropped)="drop($event)"
-        class="doc example-list"
+        class="doc document-list"
       >
         <div
           *ngFor="let document of documents[index]"
           cdkDrag
           [cdkDragDisabled]="dragDropState"
-          class="example-box"
+          class="document-box"
         >
           <app-document
             [data]="document"
@@ -62,14 +63,14 @@
       cdkDropList
       [cdkDropListData]="noCategoryDocuments"
       (cdkDropListDropped)="drop($event)"
-      class="no-cat example-list"
+      class="no-cat document-list"
     >
       <br />
       <div
         *ngFor="let document of noCategoryDocuments"
         cdkDrag
         [cdkDragDisabled]="dragDropState"
-        class="example-box"
+        class="document-box"
       >
         <app-document
           [style]="{ width: '1160px', 'margin-left': '0' }"
