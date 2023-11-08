@@ -29,7 +29,7 @@
         (showDocumentsFirstEvent)="showDocuments($event, i)"
         (showDocumentsSecondEvent)="showDocuments($event, i)"
       ></app-category>
-      <div [@openClose]="styles[i] ? 'true' : 'false'">
+      <div [ngStyle]="styles[i]">
         <ng-container
           *ngTemplateOutlet="template; context: { number: i }"
         ></ng-container>

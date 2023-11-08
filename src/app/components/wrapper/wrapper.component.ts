@@ -22,7 +22,6 @@ import { CategoryComponent } from '../category/category.component';
 import { DocumentComponent } from '../document/document.component';
 import { NgFor, NgStyle, NgTemplateOutlet } from '@angular/common';
 import { biggestNumber } from 'src/app/utils/biggest-number-function';
-import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-wrapper',
@@ -43,25 +42,6 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
     NgTemplateOutlet,
     NgStyle,
   ],
-  animations: [
-    trigger('openClose', [
-      state(
-        'true',
-        style({
-          overflow: 'hidden',
-        }),
-      ),
-      state(
-        'false',
-        style({
-          height: '0px',
-          overflow: 'hidden',
-        }),
-      ),
-      transition('true => false', [animate('0.25s')]),
-      transition('false => true', [animate('0.25s')]),
-    ]),
-  ],
 })
 export class WrapperComponent implements OnInit {
   documents$: Observable<DocumentModel[]>;
@@ -69,7 +49,7 @@ export class WrapperComponent implements OnInit {
   categories: CategoryModel[] = [];
   documents: DocumentModel[][] = [];
   noCategoryDocuments: DocumentModel[] = [];
-  styles: boolean[] = [];
+  styles: any = [];
   dragDropState = true;
 
   constructor(
@@ -91,7 +71,10 @@ export class WrapperComponent implements OnInit {
     this.categories$.subscribe((categories) => {
       categories.forEach((item) => {
         this.categories.push(item);
-        this.styles.push(false);
+        this.styles.push({
+          height: '0',
+          overflow: 'hidden'
+        });
       });
     });
 

@@ -1,6 +1,6 @@
 <div class="wrapper">
-  <div class="show-button" [@openClose]="showDocumentsState ? 'true' : 'false'">
-    <button class="circle" (click)="showDocuments()"></button>
+  <div class="show-button">
+    <button [ngStyle]="style" class="circle" (click)="showDocuments()"></button>
   </div>
   <div class="subwrapper-1">
     <div class="text-1">{{ data.type }}</div>

@@ -1,57 +1,55 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CdkDrag, CdkDragHandle, CdkDropList } from '@angular/cdk/drag-drop';
-import { NgIf } from '@angular/common';
+import { NgIf, NgStyle } from '@angular/common';
 import { CategoryModel } from 'src/app/domain/models/category.model';
-import {
-  trigger,
-  state,
-  style,
-  transition,
-  animate,
-} from '@angular/animations';
 
 @Component({
   selector: 'app-category',
   templateUrl: './category.component.html',
   styleUrls: ['./category.component.css'],
   standalone: true,
-  imports: [CdkDropList, CdkDrag, CdkDragHandle, NgIf],
-  animations: [
-    trigger('openClose', [
-      state(
-        'true',
-        style({
-          transform: 'rotate(180deg)',
-          backgroundRepeat: 'no-repeat',
-          backgroundPosition: 'center 7px',
-        }),
-      ),
-      state(
-        'false',
-        style({
-          backgroundRepeat: 'no-repeat',
-          backgroundPosition: 'center 7px',
-        }),
-      ),
-      transition('true => false', [animate('0.25s')]),
-      transition('false => true', [animate('0.25s')]),
-    ]),
-  ],
+  imports: [CdkDropList, CdkDrag, CdkDragHandle, NgIf, NgStyle],
 })
 export class CategoryComponent {
   @Input() data!: CategoryModel;
   @Output() dragDropEvent = new EventEmitter<boolean>();
-  @Output() showDocumentsFirstEvent = new EventEmitter<boolean>();
-  @Output() showDocumentsSecondEvent = new EventEmitter<boolean>();
+  @Output() showDocumentsFirstEvent = new EventEmitter<any>();
+  @Output() showDocumentsSecondEvent = new EventEmitter<any>();
   showDocumentsState = false;
+  style = {
+    transform: 'none',
+  };
 
   drag() {
     this.dragDropEvent.emit(false);
   }
 
   showDocuments() {
-    this.showDocumentsFirstEvent.emit(this.showDocumentsState ? true : false);
-    this.showDocumentsSecondEvent.emit(this.showDocumentsState ? false : true);
+    this.showDocumentsFirstEvent.emit(
+      this.showDocumentsState
+        ? {
+            overflow: 'visible',
+            height: '100%',
+          }
+        : {
+            overflow: 'hidden',
+            height: '0',
+          },
+    );
+    this.showDocumentsSecondEvent.emit(
+      this.showDocumentsState
+        ? {
+            overflow: 'hidden',
+            height: '0',
+          }
+        : {
+            overflow: 'visible',
+            height: '100%',
+          },
+    );
     this.showDocumentsState = !this.showDocumentsState;
+    this.style.transform === 'none'
+      ? (this.style.transform = 'rotate(180deg)')
+      : (this.style.transform = 'none');
   }
 }
