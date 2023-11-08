@@ -56,7 +56,6 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
         style({
           height: '0px',
           overflow: 'hidden',
-          display: 'none'
         }),
       ),
       transition('true => false', [animate('0.25s')]),
@@ -124,6 +123,7 @@ export class WrapperComponent implements OnInit {
   dropGroup(event: CdkDragDrop<any>) {
     moveItemInArray(this.categories, event.previousIndex, event.currentIndex);
     moveItemInArray(this.documents, event.previousIndex, event.currentIndex);
+    moveItemInArray(this.styles, event.previousIndex, event.currentIndex);
     this.dragDropState = true;
   }
 
